@@ -1,0 +1,22 @@
+import requests
+import json
+
+def emotion_detector(text_to_analyze):
+    """
+    Sends a text string to the Watson NLP Emotion Analysis service 
+     and returns the raw response text.
+    """
+    # URL of the emotion analysis service
+    url = 'https://sn-watson-emotion.p.cloud.ibm.com/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict'
+    
+    # Constructing the request payload in JSON format
+    myobj = { "raw_document": { "text": text_to_analyze } }
+    
+    # Custom header specifying the model ID for the service
+    header = {"grpc-metadata-mm-model-id": "emotion_aggregated-workflow_lang_en_stock"}
+    
+    # Sending a POST request to the API with the text and headers
+    response = requests.post(url, json = myobj, headers=header)
+    
+    # Returning the response text from the API
+    return response.text
